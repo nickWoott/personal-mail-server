@@ -1,27 +1,30 @@
 import nodemailer from "nodemailer";
 
 export const sendMail = async (req, res) => {
+  const { USER_EMAIL_ADDRESS, USER_EMAIL_PASSWORD } = process.env;
+
   let transport = nodemailer.createTransport({
     service: "icloud",
-    auth: { user: "nicholaswootton@icloud.com", pass: "xuju-wbkg-fffv-pzeu" },
+    auth: { user: USER_EMAIL_ADDRESS, pass: USER_EMAIL_PASSWORD },
   });
 
   const { name, message, email } = req.body;
 
   let mailOptions = {
-    from: "nicholaswootton@icloud.com",
-    to: "nicholaswootton@icloud.com",
+    from: USER_EMAIL_ADDRESS,
+    to: USER_EMAIL_ADDRESS,
     subject: "personal website query",
     text: `Name: ${name}\n Email: ${email}\n Message: ${message}`,
     html: `<p>Name: ${name}</p> <p>Email: ${email}</p> <p>${message}</p>`,
   };
-  //deconstruct these things that are coming from the req.body
 
   try {
     await transport.sendMail(mailOptions);
-    res.status(200).send("Email sent succesfully");
+    res.status(200).json({ status: 200, messaage: "Email sent succesfully" });
   } catch (err) {
     console.error(err, "error sending email");
-    res.status(500).send("error sending email");
+    res
+      .status(500)
+      .json({ status: "500", message: "error sending email", error: err });
   }
 };

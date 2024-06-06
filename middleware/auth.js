@@ -1,13 +1,18 @@
 export const authenticateToken = (req, res, next) => {
+  const { API_KEY } = process.env;
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
 
   if (token == null) {
-    return res.status(401).send("no authorisation token provided");
+    return res
+      .status(401)
+      .json({ status: 401, message: "no authorisation token provided" });
   }
 
-  if (token !== "test-token") {
-    return res.status(403).send("invalid authorisation token");
+  if (token !== API_KEY) {
+    return res
+      .status(403)
+      .json({ status: 403, message: "invalid authorisation token" });
   }
 
   next();
