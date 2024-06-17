@@ -1,7 +1,7 @@
 {
   "type": "module",
   "scripts": {
-    "start": "node app.js"
+    "server": "node listen.js"
   },
   "dependencies": {
     "@netlify/functions": "^2.7.0",

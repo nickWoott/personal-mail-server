@@ -12,11 +12,6 @@ export const sendMail = async (req, res) => {
 
   const { name, message, email } = req.body;
 
-  const debugObject = {
-    envVars: { USER_EMAIL_ADDRESS, USER_EMAIL_PASSWORD },
-    reqBody: { name, message, email },
-  };
-
   let mailOptions = {
     from: USER_EMAIL_ADDRESS,
     to: USER_EMAIL_ADDRESS,
@@ -27,9 +22,7 @@ export const sendMail = async (req, res) => {
 
   try {
     await transport.sendMail(mailOptions);
-    res
-      .status(200)
-      .json({ status: 200, debugObject, messaage: "Email sent succesfully" });
+    res.status(200).json({ status: 200, messaage: "Email sent succesfully" });
   } catch (err) {
     console.error(err, "error sending email");
     res.status(500).json({

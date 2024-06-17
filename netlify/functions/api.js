@@ -5,8 +5,4 @@ import app from "../../server";
 
 export const handler = serverless(app);
 
-// const api = express();
 
-// api.use("/api/", router);
-
-// export const handler = serverless(api);
