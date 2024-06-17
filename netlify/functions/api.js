@@ -1,9 +1,12 @@
 import express, { Router } from "express";
 import serverless from "serverless-http";
 import router from "../../routes/routes";
+import app from "../../server";
 
-const api = express();
+export const handler = serverless(app);
 
-api.use("/api/", router);
+// const api = express();
 
-export const handler = serverless(api);
+// api.use("/api/", router);
+
+// export const handler = serverless(api);
